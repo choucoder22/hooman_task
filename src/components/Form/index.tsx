@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import styles from '../../app/page.module.css';
 import Input from '../Input';
 import Button from '../Button';
+import Label from '../Label';
+import PrimaryButton from '../PrimaryButton';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Form = () => {
@@ -11,21 +15,22 @@ const Form = () => {
 
   const sendMessage = () => {
     if (name.length > 0 && email.length > 0 && message.length > 0) {
-      /* enviar mensaje, simular */
       setName("");
       setEmail("");
       setMessage("");
-      // mostrar un alert que el mensaje fue enviado exitosamente
+      toast("El mensaje ha sido enviado correctamente");
+    } else {
+      toast("Faltan campos por llenar en el formulario");
     }
   }
 
   return (
     <div className={styles.formContainer}>
       <div className={styles.formInputContainer}>
-        <Input 
-          placeholder="Full name"
+        <Input
           value={name}
-          onChange={(value: string) => setName(value) }
+          placeholder="Full name"
+          onChange={(value: string) => setName(value)}
         />
         <Input
           placeholder="Email address"
@@ -39,10 +44,15 @@ const Form = () => {
           onChange={(value: string) => setMessage(value)}
         />
       </div>
-      <Button
-        value="Send Message"
-        onPress={() => { sendMessage() }}
-      />
+      <div className={styles.containerButton}>
+        <PrimaryButton
+          value="Send Message"
+          onPress={() => {
+            sendMessage();
+          }}
+        />
+      </div>
+      <ToastContainer />
     </div>
   );
 };
